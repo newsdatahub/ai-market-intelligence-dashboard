@@ -48,6 +48,8 @@ It combines structured news data from **NewsDataHub** with **AI summarization** 
 
 You can try the dashboard instantly — **no API keys required** — using the **demo topic mode**.
 
+![Demo Mode](assets/setup-and-demo-topic.gif)
+
 ### How to Use Demo Mode
 
 1. Start the application with Docker (`docker compose up`).
