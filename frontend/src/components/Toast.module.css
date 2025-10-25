@@ -1,0 +1,135 @@
+.container {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  max-width: 420px;
+}
+
+.container.topRight {
+  top: 0;
+  right: 0;
+}
+
+.container.topCenter {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.container.bottomRight {
+  bottom: 0;
+  right: 0;
+}
+
+.container.bottomCenter {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  border-left: 4px solid;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.toast.error {
+  border-left-color: var(--error);
+  background: #fff5f5;
+}
+
+.toast.success {
+  border-left-color: var(--success);
+  background: #f0fdf4;
+}
+
+.toast.info {
+  border-left-color: var(--primary-accent);
+  background: #fef9f6;
+}
+
+.icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.message {
+  flex: 1;
+  color: var(--text-primary);
+  font-weight: 500;
+  white-space: pre-line;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.2s;
+  border-radius: 4px;
+}
+
+.closeButton:hover {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Animations */
+.enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.exit {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .container {
+    max-width: calc(100% - 32px);
+    left: 16px;
+    right: 16px;
+  }
+
+  .container.topCenter,
+  .container.bottomCenter {
+    transform: none;
+  }
+
+  .toast {
+    font-size: 13px;
+    padding: 12px 14px;
+  }
+}

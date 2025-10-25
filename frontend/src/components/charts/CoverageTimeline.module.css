@@ -1,0 +1,75 @@
+  /* Example: Change cursor to pointer when hovering over data points in a scatter plot */
+  .js-plotly-plot .plotly .scatterlayer .points path {
+    cursor: pointer;
+  }
+
+  /* Example: Change cursor to pointer when hovering over legend items */
+  .js-plotly-plot .plotly .legend .legendtoggle {
+    cursor: pointer;
+  }
+
+
+  .chartContainer {
+    width: 100%;
+  }
+
+  .chartWrapper {
+    width: 100%;
+    height: 350px;
+  }
+
+  .chartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .chartHeader h3 {
+    margin: 0;
+    color: var(--primary-dark);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .chartModeToggle {
+    display: flex;
+    gap: 4px;
+    background: rgba(44, 62, 80, 0.05);
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  .chartModeBtn {
+    padding: 6px 16px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .chartModeBtn:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .chartModeBtn.active {
+    background: var(--white);
+    color: var(--primary-dark);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+  }
+
+  .chartContext {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(252, 119, 83, 0.08);
+    border-left: 3px solid var(--primary-accent);
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }

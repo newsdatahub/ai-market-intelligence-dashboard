@@ -1,0 +1,412 @@
+.container {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.topRow {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.row {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.geoColumn {
+  display: grid;
+  gap: 20px;
+  grid-template-rows: auto auto;
+}
+
+/* Chart and map panels should have equal height */
+.chartPanel {
+  min-height: 500px;
+  height: auto;
+  overflow: visible;
+}
+
+.row3 {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1024px) {
+  .topRow,
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .geoColumn {
+    grid-template-rows: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .topRow,
+  .row,
+  .row3 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.panel {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Intelligence panels should have consistent height */
+.intelligencePanel {
+  min-height: 500px;
+  height: 500px;
+  overflow-y: auto;
+}
+
+/* Entities panel - full width section */
+.entitiesPanel {
+  /* inherits from .panel */
+}
+
+.intelligencePanelContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 12px;
+}
+
+.article {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color 0.2s;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.article:hover {
+  background-color: rgba(252, 119, 83, 0.05);
+}
+
+.articleTitle {
+  color: var(--primary-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.articleTitle::after {
+  content: '↗';
+  font-size: 0.85em;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.articleTitle:hover {
+  color: var(--primary-accent);
+  text-decoration: underline;
+}
+
+.articleTitle:hover::after {
+  opacity: 1;
+}
+
+.summary {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  margin-top: 12px;
+}
+
+.controls {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.chartModeToggle {
+  display: flex;
+  gap: 4px;
+  background: rgba(44, 62, 80, 0.05);
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.chartModeBtn {
+  padding: 6px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chartModeBtn.active {
+  background: var(--white);
+  color: var(--primary-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chartContext {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(252, 119, 83, 0.1);
+  border-left: 3px solid var(--primary-accent);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.emptyState {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.emptyStateIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.emptyStateSubtext {
+  font-size: 13px;
+  margin-top: 8px;
+  color: var(--text-secondary);
+}
+
+.reportHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.articleMeta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.articleActions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.geoReportContent {
+  /* Ensure geo report has same styling as main report */
+}
+
+.articleReferences {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--border-light);
+}
+
+.articleReferences h4 {
+  color: var(--primary-dark);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.collapsibleHeader {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+
+.collapsibleHeader:hover {
+  color: var(--primary-accent);
+}
+
+.collapseIcon {
+  font-size: 0.8em;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.referenceList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.referenceList li {
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.referenceList li:hover {
+  background-color: rgba(252, 119, 83, 0.05);
+}
+
+.referenceList a {
+  color: var(--primary-dark);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.referenceList a:hover {
+  color: var(--primary-accent);
+  text-decoration: underline;
+}
+
+.referenceSource {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
+.referenceListContainer {
+  max-height: 100px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.referenceListContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.referenceListContainer::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.referenceListContainer::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.referenceListContainer::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: 16px;
+  }
+
+  .intelligencePanel {
+    min-height: 350px;
+    height: 350px;
+  }
+
+  .chartPanel {
+    min-height: 300px;
+    height: 300px;
+  }
+
+  .list {
+    max-height: 300px;
+  }
+
+  .emptyState {
+    padding: 32px 16px;
+  }
+
+  .emptyStateIcon {
+    font-size: 36px;
+  }
+
+  .articleActions {
+    flex-direction: column;
+  }
+
+  .articleActions button {
+    width: 100%;
+  }
+}
+
+/* Extra small devices (smartphones in portrait) */
+@media (max-width: 480px) {
+  .container {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .panel {
+    padding: 12px;
+  }
+
+  .intelligencePanel {
+    min-height: 300px;
+    height: 300px;
+  }
+
+  .chartPanel {
+    min-height: 250px;
+    height: 250px;
+  }
+
+  .topRow,
+  .row,
+  .row3 {
+    gap: 8px;
+  }
+
+  .geoColumn {
+    gap: 8px;
+  }
+
+  .emptyState {
+    padding: 24px 12px;
+  }
+
+  .emptyStateIcon {
+    font-size: 32px;
+  }
+
+  .reportHeader h3,
+  .panel h3 {
+    font-size: 1rem;
+  }
+}

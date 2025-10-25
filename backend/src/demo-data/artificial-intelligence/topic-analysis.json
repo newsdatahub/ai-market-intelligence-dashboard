@@ -1,0 +1,579 @@
+{
+    "topic": {
+        "topic": "\"artificial intelligence\"",
+        "totalMentions": 1898,
+        "dateRange": {
+            "start": "2025-09-25",
+            "end": "2025-10-25"
+        },
+        "sentimentAverage": {
+            "positive": 0.109,
+            "neutral": 0.853,
+            "negative": 0.036
+        },
+        "politicalLeaningDistribution": [
+            {
+                "leaning": "nonpartisan",
+                "count": 796,
+                "share": 0.4194
+            },
+            {
+                "leaning": "center",
+                "count": 582,
+                "share": 0.3066
+            },
+            {
+                "leaning": "center_left",
+                "count": 288,
+                "share": 0.1517
+            },
+            {
+                "leaning": "center_right",
+                "count": 114,
+                "share": 0.0601
+            },
+            {
+                "leaning": "right",
+                "count": 102,
+                "share": 0.0537
+            },
+            {
+                "leaning": "left",
+                "count": 8,
+                "share": 0.0042
+            },
+            {
+                "leaning": "far_right",
+                "count": 6,
+                "share": 0.0032
+            },
+            {
+                "leaning": "far_left",
+                "count": 2,
+                "share": 0.0011
+            }
+        ],
+        "topEntities": {
+            "organizations": [
+                "BlackRock",
+                "Google",
+                "Applied Digital",
+                "Spear Invest",
+                "Nvidia",
+                "Microsoft",
+                "Netflix",
+                "Salesforce",
+                "Anthropic",
+                "OpenAI"
+            ],
+            "people": [
+                "Ivana Delevska",
+                "Jeff Bezos",
+                "Vivek Ramaswamy",
+                "Sam Altman",
+                "Ken McCallum",
+                "David Sacks",
+                "Dario Amodei",
+                "Rick Perry",
+                "Doug McMillon",
+                "James Anderson"
+            ],
+            "locations": [
+                "U.S.",
+                "Ohio",
+                "San Francisco",
+                "Taiwan",
+                "Democratic Republic of Congo",
+                "Japan",
+                "China",
+                "Russia",
+                "North Korea",
+                "Iran"
+            ]
+        },
+        "topKeywords": [
+            {
+                "keyword": "intelligence",
+                "count": 299
+            },
+            {
+                "keyword": "infrastructure",
+                "count": 171
+            },
+            {
+                "keyword": "artificial intelligence",
+                "count": 167
+            },
+            {
+                "keyword": "news",
+                "count": 139
+            },
+            {
+                "keyword": "general",
+                "count": 127
+            },
+            {
+                "keyword": "administration",
+                "count": 50
+            },
+            {
+                "keyword": "transformation",
+                "count": 49
+            },
+            {
+                "keyword": "google",
+                "count": 43
+            },
+            {
+                "keyword": "summarize",
+                "count": 43
+            },
+            {
+                "keyword": "international",
+                "count": 41
+            }
+        ],
+        "mentionsByDay": {
+            "2025-10-11": 35,
+            "2025-10-01": 79,
+            "2025-10-10": 51,
+            "2025-09-30": 72,
+            "2025-10-15": 139,
+            "2025-10-22": 78,
+            "2025-09-29": 84,
+            "2025-10-03": 33,
+            "2025-10-14": 163,
+            "2025-10-16": 98,
+            "2025-09-27": 35,
+            "2025-10-04": 23,
+            "2025-10-13": 95,
+            "2025-10-23": 89,
+            "2025-10-18": 28,
+            "2025-10-17": 66,
+            "2025-10-05": 22,
+            "2025-10-09": 55,
+            "2025-09-26": 73,
+            "2025-10-21": 65,
+            "2025-09-25": 89,
+            "2025-10-19": 11,
+            "2025-10-08": 66,
+            "2025-09-28": 43,
+            "2025-10-02": 55,
+            "2025-10-07": 57,
+            "2025-10-24": 60,
+            "2025-10-06": 61,
+            "2025-10-20": 39,
+            "2025-10-12": 34
+        },
+        "topSources": [
+            {
+                "source": "CNBC",
+                "count": 164
+            },
+            {
+                "source": "Bloomberg",
+                "count": 131
+            },
+            {
+                "source": "Nasdaq",
+                "count": 117
+            },
+            {
+                "source": "The Guardian",
+                "count": 72
+            },
+            {
+                "source": "NewsBytes",
+                "count": 52
+            },
+            {
+                "source": "New York Post",
+                "count": 46
+            },
+            {
+                "source": "Fox News",
+                "count": 37
+            },
+            {
+                "source": "Seeking Alpha",
+                "count": 36
+            },
+            {
+                "source": "The Sydney Morning Herald",
+                "count": 34
+            },
+            {
+                "source": "Evening Standard",
+                "count": 33
+            }
+        ],
+        "geographicDistribution": [
+            {
+                "country": "US",
+                "count": 1010
+            },
+            {
+                "country": "IN",
+                "count": 223
+            },
+            {
+                "country": "GB",
+                "count": 199
+            },
+            {
+                "country": "ZZ",
+                "count": 85
+            },
+            {
+                "country": "AU",
+                "count": 73
+            },
+            {
+                "country": "CA",
+                "count": 63
+            },
+            {
+                "country": "NG",
+                "count": 40
+            },
+            {
+                "country": "AZ",
+                "count": 24
+            },
+            {
+                "country": "TW",
+                "count": 24
+            },
+            {
+                "country": "SG",
+                "count": 20
+            },
+            {
+                "country": "PH",
+                "count": 15
+            },
+            {
+                "country": "JP",
+                "count": 14
+            },
+            {
+                "country": "AE",
+                "count": 10
+            },
+            {
+                "country": "PK",
+                "count": 7
+            },
+            {
+                "country": "IE",
+                "count": 7
+            },
+            {
+                "country": "BM",
+                "count": 7
+            },
+            {
+                "country": "MY",
+                "count": 6
+            },
+            {
+                "country": "KR",
+                "count": 6
+            },
+            {
+                "country": "EU",
+                "count": 4
+            },
+            {
+                "country": "TR",
+                "count": 4
+            },
+            {
+                "country": "ZA",
+                "count": 3
+            },
+            {
+                "country": "PT",
+                "count": 3
+            },
+            {
+                "country": "NL",
+                "count": 3
+            },
+            {
+                "country": "NZ",
+                "count": 3
+            },
+            {
+                "country": "HK",
+                "count": 3
+            },
+            {
+                "country": "CH",
+                "count": 3
+            },
+            {
+                "country": "NA",
+                "count": 3
+            },
+            {
+                "country": "IM",
+                "count": 2
+            },
+            {
+                "country": "BE",
+                "count": 2
+            },
+            {
+                "country": "TT",
+                "count": 2
+            },
+            {
+                "country": "GR",
+                "count": 2
+            },
+            {
+                "country": "RU",
+                "count": 2
+            },
+            {
+                "country": "AR",
+                "count": 2
+            },
+            {
+                "country": "NP",
+                "count": 2
+            },
+            {
+                "country": "NaN",
+                "count": 2
+            },
+            {
+                "country": "DE",
+                "count": 2
+            },
+            {
+                "country": "TH",
+                "count": 2
+            },
+            {
+                "country": "MT",
+                "count": 2
+            },
+            {
+                "country": "DO",
+                "count": 2
+            },
+            {
+                "country": "JM",
+                "count": 1
+            },
+            {
+                "country": "ES",
+                "count": 1
+            },
+            {
+                "country": "IR",
+                "count": 1
+            },
+            {
+                "country": "LY",
+                "count": 1
+            },
+            {
+                "country": "CZ",
+                "count": 1
+            },
+            {
+                "country": "LK",
+                "count": 1
+            },
+            {
+                "country": "BA",
+                "count": 1
+            },
+            {
+                "country": "BG",
+                "count": 1
+            },
+            {
+                "country": "ID",
+                "count": 1
+            },
+            {
+                "country": "FI",
+                "count": 1
+            },
+            {
+                "country": "GY",
+                "count": 1
+            },
+            {
+                "country": "CY",
+                "count": 1
+            }
+        ],
+        "topArticles": [
+            {
+                "title": "Previewing Mag 7 Earnings: What Investors Should Know",
+                "description": "Except for Apple, the four Mag 7 members reporting this week are all leaders in the artificial intelligence space and are actively investing in data centers and related infrastructure to run large language models. But what else should investors be aware of?.",
+                "source": "Nasdaq",
+                "publishedDate": "2025-10-24T23:18:00",
+                "sentiment": 0.126,
+                "articleUrl": "https://www.nasdaq.com/articles/previewing-mag-7-earnings-what-investors-should-know"
+            },
+            {
+                "title": "Cuomo campaign blames ‘junior staffer’ for AI video depicting ‘criminals for Zohran Mamdani’ after racism accusations",
+                "description": "The video, which was taken down a few minutes after it went live on Cuomo’s X account Wednesday evening, depicted sloppy AI-generated depictions of pimp, drunk driver, shoplifter, and domestic abuser amongst others sardonically cheering on Mamdani’s soft-on-crime policies.",
+                "source": "New York Post",
+                "publishedDate": "2025-10-24T21:58:59",
+                "sentiment": -0.036000000000000004,
+                "articleUrl": "https://nypost.com/2025/10/24/us-news/cuomo-campaign-whacked-for-cringey-ai-video-claims-accidentally-posted-by-junior-staffer/"
+            },
+            {
+                "title": "Garfield County adopts first policy governing artificial intelligence use by employees",
+                "description": "Garfield County commissioners on Monday unanimously approved the county's first policy regulating how government employees use artificial intelligence (AI). First drafted in August, the policy was added to the Board of County Commissioners' consent agenda.",
+                "source": "Aspen Times",
+                "publishedDate": "2025-10-24T21:57:59",
+                "sentiment": 0.10400000000000001,
+                "articleUrl": "https://www.aspentimes.com/news/garfield-county-adopts-first-policy-governing-artificial-intelligence-use-by-employees/"
+            },
+            {
+                "title": "Age restrictions for AI chatbots may be in new privacy bill, minister says",
+                "description": "Artificial Intelligence Minister Evan Solomon's comments come at a time of rising concerns about the risks of chatbots to children, including mental health issues.",
+                "source": "Global News",
+                "publishedDate": "2025-10-24T21:54:48",
+                "sentiment": -0.06400000000000002,
+                "articleUrl": "https://globalnews.ca/news/11493930/ai-chatbots-age-restrictions-privacy-bill-solomon/"
+            },
+            {
+                "title": "Microsoft AI bots won’t talk dirty with users, exec confirms as company takes swipe at OpenAI",
+                "description": "Microsoft AI bots won’t talk dirty with users, exec confirms as company takes swipe at OpenAI",
+                "source": "New York Post",
+                "publishedDate": "2025-10-24T20:58:56",
+                "sentiment": 0.035,
+                "articleUrl": "https://nypost.com/2025/10/24/business/microsoft-ai-bots-wont-talk-dirty-with-users-exec-says-taking-swipe-at-openai/"
+            },
+            {
+                "title": "Wall Street hits records following an encouraging update on inflation",
+                "description": "Wall Street rose to records after an update said U. S. households are feeling a bit less pain from inflation than feared.",
+                "source": "Los Angeles Times",
+                "publishedDate": "2025-10-24T20:38:35",
+                "sentiment": 0.047000000000000014,
+                "articleUrl": "https://www.latimes.com/business/story/2025-10-24/wall-street-hits-records-following-an-encouraging-update-on-inflation"
+            },
+            {
+                "title": "Intel profitable again: How Trump's bet paid off; stock up 50%",
+                "description": "Chip giant Intel has returned to profit after six quarters of losses. The company reported strong revenue in the third quarter, driven by high demand for its chips. This positive performance follows a significant investment from the US government. Intel expects this robust demand to continue through 2026. The company's client computing segment, which includes PC and laptop chips, saw a 5% year-over-year increase. Artificial intelligence is seen as a key driver for future growth.",
+                "source": "Times of India",
+                "publishedDate": "2025-10-24T20:06:17",
+                "sentiment": 0.079,
+                "articleUrl": "https://timesofindia.indiatimes.com/technology/tech-news/intel-returns-to-profit-after-six-straight-quarterly-losses-cfo-david-zinser-tells-what-its-to-have-the-us-government-as-intels-biggest-shareholder/articleshow/124794628.cms"
+            },
+            {
+                "title": "Cuomo Campaign’s Zohran Mamdani Ad Paints Grim Picture",
+                "description": "Cuomo Campaign’s Zohran Mamdani Ad Paints Grim Picture",
+                "source": "The Daily Caller",
+                "publishedDate": "2025-10-24T20:00:22",
+                "sentiment": 0.08300000000000002,
+                "articleUrl": "https://dailycaller.com/2025/10/24/andrew-cuomo-ad-zohran-mamdani-new-york-city-mayor-election/"
+            },
+            {
+                "title": "Don't Misuse AI-Based Tools: EC Warns Parties Ahead Of Bihar Polls",
+                "description": "Ahead of assembly polls in Bihar, the Election Commission on Friday issued an advisory to political parties against the misuse of Artificial Intelligence (AI)-based tools in political campaigns, saying such content poses a grave threat by its ability to masquerade as truth.",
+                "source": "Deccan Chronicle",
+                "publishedDate": "2025-10-24T19:49:11",
+                "sentiment": 0.031,
+                "articleUrl": "https://www.deccanchronicle.com/nation/dont-misuse-ai-based-tools-ec-warns-parties-ahead-of-bihar-polls-1912403"
+            },
+            {
+                "title": "Inman Reveals the 2025 AI Award Winners Transforming Real Estate Through Innovation",
+                "description": "The 2025 Inman AI Awards honor companies and individuals leveraging artificial intelligence to revolutionize the real estate industry. TALLAHASSEE, Fla., Oct. 24, 2025 /PRNewswire-PRWeb Inman, the leading news source for real estate agents, brokers, executives and technology leaders,.",
+                "source": "PRWeb",
+                "publishedDate": "2025-10-24T19:40:00",
+                "sentiment": 0.251,
+                "articleUrl": "https://www.prweb.com/releases/inman-reveals-the-2025-ai-award-winners-transforming-real-estate-through-innovation-302593473.html"
+            },
+            {
+                "title": "Japan Artificial Intelligence (AI) in Construction Market Insights: Regional and Segmental Analysis",
+                "description": "This Japan Artificial Intelligence (AI) in Construction Market research report has been meticulously prepared by our expert analysts at Prophecy Market Insights, leveraging a combination of primary and secondary research methodologies. The analysis offers deep insights into the Japan Artificial Intelligence (AI) in . Read more.",
+                "source": "PR News Releaser",
+                "publishedDate": "2025-10-24T18:50:02",
+                "sentiment": 0.14100000000000001,
+                "articleUrl": "https://www.prnewsreleaser.com/news/116344"
+            },
+            {
+                "title": "Newsom calls Trump's consideration of sending troops to San Francisco \"laughable\"",
+                "description": "In a \"CBS Sunday Morning\" interview to air Oct. 26, the California governor dismisses the president's proposal to send National Guard troops to San Francisco, and says that he would sue to block any such attempt.",
+                "source": "CBS News",
+                "publishedDate": "2025-10-24T18:02:15",
+                "sentiment": -0.017,
+                "articleUrl": "https://www.cbsnews.com/news/newsom-on-trumps-laughable-national-guard-suggestion-nothing-happening-in-san-francisco/"
+            },
+            {
+                "title": "Business Insider will start publishing stories by AI ‘author’",
+                "description": "“The Business Insider AI byline uses generative AI tools to draft news stories so we can bring readers more information, more quickly,” the page states.",
+                "source": "New York Post",
+                "publishedDate": "2025-10-24T16:53:35",
+                "sentiment": 0.129,
+                "articleUrl": "https://nypost.com/2025/10/24/business/business-insider-to-start-publishing-stories-by-ai-author/"
+            },
+            {
+                "title": "UConn researchers use AI in weather forecasting to predict power outages",
+                "description": "A research collaboration between the University of Connecticut and Eversource aims to change the way utilities prepare for outages, using the power of artificial intelligence (AI) to improve weather forecasting. “What we do is try to improve prediction of extreme weather events in the Northeast think about hurricanes, thunderstorms, severe thunderstorms and all that,” Dr. Marina Astitha, associate professor of civil.",
+                "source": "NBC Connecticut",
+                "publishedDate": "2025-10-24T16:00:00",
+                "sentiment": 0.058,
+                "articleUrl": "https://www.nbcconnecticut.com/weather-news/stories/uconn-researchers-use-ai-weather-forecasting-predict-power-outages/3654612/"
+            },
+            {
+                "title": "AI-powered blockchain project to tackle real-world problems launches in Uyo",
+                "description": "A community-driven blockchain project that combines artificial intelligence and decentralised participation to solve real-world problems is set to launch in read more AI-powered blockchain project to tackle real-world problems launches in Uyo.",
+                "source": "BusinessDay  (Nigeria)",
+                "publishedDate": "2025-10-24T15:57:17",
+                "sentiment": -0.0040000000000000036,
+                "articleUrl": "https://businessday.ng/news/article/ai-powered-blockchain-project-to-tackle-real-world-problems-launches-in-uyo/"
+            },
+            {
+                "title": "Teacher Translates Khand of Sundarakhanda into Gondi",
+                "description": "Kailas said he translated the fifth Khand of Sundarakhanda, originally written and sung by the noted singer and writer late M. R. Ramarao, into Gondi.",
+                "source": "Deccan Chronicle",
+                "publishedDate": "2025-10-24T14:57:28",
+                "sentiment": 0.09,
+                "articleUrl": "https://www.deccanchronicle.com/southern-states/telangana/teacher-translates-khand-of-sundarakhanda-into-gondi-1912302"
+            },
+            {
+                "title": "Why some are fated to be stoners. Your tech and science digest",
+                "description": "Why some are fated to be stoners. Your tech and science digest",
+                "source": "Evening Standard",
+                "publishedDate": "2025-10-24T14:47:46",
+                "sentiment": 0.024,
+                "articleUrl": "https://www.standard.co.uk/lifestyle/cannabis-habit-genetically-inherited-b1254785.html"
+            },
+            {
+                "title": "Ombudsman plans to use AI in fight against corruption",
+                "description": "The Office of the Ombudsman is planning to use artificial intelligence (AI) to investigate and prosecute graft and corruption cases.",
+                "source": "GMA News Online",
+                "publishedDate": "2025-10-24T14:18:24",
+                "sentiment": 0.031000000000000007,
+                "articleUrl": "https://www.gmanetwork.com/news/topstories/nation/963646/ombudsman-ai-corruption/story/"
+            },
+            {
+                "title": "Bank of England Probes Data Center Lending Amid AI Bubble Fears",
+                "description": "The Bank of England is reviewing lending to data centers that are a one way bet on the future of artificial intelligence.",
+                "source": "Bloomberg",
+                "publishedDate": "2025-10-24T14:04:53",
+                "sentiment": 0,
+                "articleUrl": "https://www.bloomberg.com/news/articles/2025-10-24/bank-of-england-probes-data-center-lending-amid-ai-bubble-fears"
+            },
+            {
+                "title": "'I like it when there is concern': JP Morgan AM confident on AI's longevity",
+                "description": "Senior JP Morgan Asset Management (JPMAM) managing directors have backed the dominant technology and artificial intelligence investment trend at a time when concerns of a potential bubble have been raised.",
+                "source": "Investment Week",
+                "publishedDate": "2025-10-24T13:57:51",
+                "sentiment": 0.213,
+                "articleUrl": "https://www.investmentweek.co.uk/news/4520918/concern-jp-morgan-confident-ais-longevity"
+            }
+        ]
+    }
+}
