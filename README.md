@@ -52,21 +52,40 @@ You can try the dashboard instantly — **no API keys required** — using the *
 
 ### How to Use Demo Mode
 
-1. Start the application with Docker (`docker compose up`).
-2. Enter a topic ending with `-demo` in the search bar:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/newsdatahubapi/ai-market-intelligence-dashboard.git
+   cd ai-market-intelligence-dashboard
+   ```
 
+2. Copy the environment files:
+   ```bash
+   cp backend/.env.example backend/.env
+   cp frontend/.env.example frontend/.env
+   ```
+
+3. Start the application with Docker:
+   ```bash
+   docker compose up
+   ```
+
+4. Navigate to [http://localhost:5173](http://localhost:5173) in your browser.
+
+5. Enter the demo topic in the search bar:
    ```
    "artificial intelligence"-demo
    ```
 
-3. The app will instantly display:
-
+6. The app will instantly display:
    * Topic Analysis dashboard with charts and metrics
    * AI-Powered News Brief (main report)
-   * Timeline Insights (auto-triggered for top spike date)
-   * Regional Insights (auto-triggered for top country)
+   * Timeline Insights (pre-generated)
+   * Regional Insights (pre-generated)
 
 > 💡 **Note:** If you enter an unsupported demo topic, you'll see a 10-second toast notification suggesting valid alternatives. If you enter a regular topic without API keys configured, you'll see which environment variables need to be set.
+
+> ![toast](assets/unsupported-demo-topic-toast.png)
+
 
 **Currently supported demo topics:**
 
@@ -102,18 +121,6 @@ All demo responses are pre-cached JSON files and work without API access or netw
   3. Regional Insights (for top country)
 * 10-second toast notifications for unsupported topics or missing API keys
 
-**Adding New Demo Topics:**
-
-1. Create directory: `backend/src/demo-data/<new-topic>/`
-2. Add JSON files following the structure above
-3. Update `getSupportedDemoTopics()` in `demoDataService.ts`:
-   ```typescript
-   export function getSupportedDemoTopics(): string[] {
-     return ['artificial intelligence', 'new-topic'];
-   }
-   ```
-4. Update demo data loading functions to handle the new topic
-
 ---
 
 ## Features
@@ -132,18 +139,31 @@ All demo responses are pre-cached JSON files and work without API access or netw
 
 * Real-time news fetching from NewsDataHub API
 * Complex keyword queries with boolean operators
-* Date-range filters (7, 14, 30 days)
-* Language filtering (English in this tutorial)
+* Date-range filters (14, 30 days)
 * Smart caching to conserve API calls
 
 ### Analysis & Visualization
 
 * **Sentiment Analysis** — Keyword-based scoring (positive/neutral/negative)
+
+![sentiment](assets/media-tone-distribution.png)
+
 * **Coverage Timeline** — Interactive daily trends with spike detection
+
+![coverage-timeline](assets/coverage-overtime-line-chart.png)
+
 * **Geographic Map** — Article counts by source country
-* **Top Sources** — Ranking of most active publishers
+
+![geographic-map](assets/geographic-coverage-map.png)
+
+
 * **Keyword Extraction** — Frequently mentioned terms
+
+![top-keywords](assets/top-keywords.png)
+
 * **Entity Recognition** — OpenAI-powered extraction of people, organizations, locations
+
+![top-entities](assets/top-entities-mentioned.png)
 
 ### OpenAI Integration
 
@@ -154,7 +174,7 @@ All demo responses are pre-cached JSON files and work without API access or netw
 
 ### Reporting
 
-* PDF report generation (html2pdf.js)
+* PDF report generation (@react-pdf/renderer)
 * Embedded charts and summaries
 * Professional formatting for executive distribution
 * Automatic disclaimer inclusion
@@ -163,27 +183,20 @@ All demo responses are pre-cached JSON files and work without API access or netw
 
 ## How It Works
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        User Interface (React)                        │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐               │
-│  │ Topic Input  │  │ Dashboards   │  │ PDF Export   │               │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘               │
-└─────────┼──────────────────┼──────────────────┼──────────────────────┘
-          │                  │                  │
-          ▼                  ▼                  ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                      Express Backend API                            │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐               │
-│  │ News Routes  │  │ Intelligence │  │  Cache Layer  │               │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘               │
-└─────────┼──────────────────┼──────────────────┼──────────────────────┘
-          │                  │
-          ▼                  ▼
-┌──────────────────────┐      ┌──────────────────────┐
-│ NewsDataHub API      │      │ OpenAI API           │
-│ News aggregation     │      │ GPT-4o-mini analysis │
-└──────────────────────┘      └──────────────────────┘
+```mermaid
+flowchart LR
+    A[React Frontend] --> B[Express API]
+    B --> C[News Service<br/>+ Cache]
+    B --> D[AI Service<br/>+ Cache]
+    C --> E[NewsDataHub API]
+    D --> F[OpenAI API]
+
+    style A fill:#61dafb,stroke:#333,color:#000
+    style B fill:#f0db4f,stroke:#333,color:#000
+    style C fill:#e8f5e9,stroke:#333,color:#000
+    style D fill:#e8f5e9,stroke:#333,color:#000
+    style E fill:#fc7753,stroke:#333,color:#fff
+    style F fill:#10a37f,stroke:#333,color:#fff
 ```
 
 **Processing flow**
@@ -254,27 +267,21 @@ cd ai-market-intelligence-dashboard
 
 ### 2 · Configure Environment
 
-#### Backend `.env`
+Copy the example environment files:
 
-Create `backend/.env`:
+```bash
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
+
+Then edit `backend/.env` and add your API keys:
 
 ```bash
 NEWSDATAHUB_API_KEY=your_newsdatahub_key
-NEWSDATAHUB_BASE_URL=https://api.newsdatahub.com
 OPENAI_API_KEY=your_openai_key
-OPENAI_MODEL=gpt-4o-mini
-PORT=3001
 ```
 
-#### Frontend `.env`
-
-Create `frontend/.env`:
-
-```bash
-VITE_API_BASE_URL=http://localhost:3001
-```
-
-> **Quick Start with Demo Mode:** Skip environment setup and use `"artificial intelligence"-demo` as your search topic to try the dashboard immediately.
+> **Quick Start with Demo Mode:** You can skip adding API keys and use `"artificial intelligence"-demo` as your search topic to try the dashboard immediately.
 
 ### 3 · Run with Docker
 
@@ -282,16 +289,13 @@ VITE_API_BASE_URL=http://localhost:3001
 docker compose up
 ```
 
-* Backend → [http://localhost:3001](http://localhost:3001)
-* Frontend → [http://localhost:5173](http://localhost:5173)
-
-Then open the dashboard and start analyzing news topics.
+Navigate to [http://localhost:5173](http://localhost:5173) to access the dashboard and start analyzing news topics.
 
 ---
 
 ## Example Reports
 
-Sample PDFs in `/example-reports` demonstrate outputs such as:
+You can view example exported PDF reports in the `example-reports/` directory. These demonstrate the three types of reports the dashboard can generate:
 
 * `_gold-mining__News-Brief_2025-09-25-to-2025-10-25.pdf`
 * `_quantum-computing__Regional-Insights_GB_2025-10-18-to-2025-10-25.pdf`
@@ -304,18 +308,13 @@ Sample PDFs in `/example-reports` demonstrate outputs such as:
 ### **Demo Mode**
 
 **Q: How do I use demo mode?**
-Enter any supported topic with `-demo` suffix (e.g., `"artificial intelligence"-demo`).
-The dashboard loads instantly using pre-cached JSON data.
-
-**Q: What topics are available in demo mode?**
-Currently supported: `"artificial intelligence"-demo`.
-To add more, create a directory in `backend/src/demo-data/` and update `getSupportedDemoTopics()` in `demoDataService.ts`.
+Only one demo topic is currently supported: `"artificial intelligence"-demo`. Enter this topic in the search bar and the dashboard will load instantly using pre-cached JSON data. No API keys required.
 
 **Q: Do I need API keys for demo mode?**
 No. Demo mode works completely offline — no keys, no API requests.
 
 **Q: Does the demo behave the same as live mode?**
-Yes. All charts, reports, and exports behave identically, using stored data instead of real API responses.
+Almost. All charts and reports display identically using stored data instead of real API responses. The main difference is that in demo mode, the Timeline Insights and Regional Insights reports are pre-generated and displayed automatically. In the live application, you would need to click on specific dates in the timeline chart or countries on the map to generate these reports.
 
 **Q: What happens if I enter a non-existent demo topic?**
 You'll see a 10-second toast message: `"This demo topic not supported. Try: "artificial intelligence"-demo"`
@@ -368,7 +367,7 @@ Modify `createIntelligenceReportMessages()` for tone/length, or `createContextEx
 Yes — extend components in `frontend/src/components/charts/`.
 
 **Q: How do I customize PDF styling?**
-Modify `frontend/src/components/ExportReportPDF.tsx` or adjust the CSS used by `html2pdf.js`.
+Modify the StyleSheet in `frontend/src/components/ExportReportPDF.tsx`.
 
 **Q: How do I deploy this?**
 This is a tutorial. For production:
