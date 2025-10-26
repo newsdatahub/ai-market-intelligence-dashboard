@@ -133,8 +133,6 @@ All demo responses are pre-cached JSON files and work without API access or netw
 * **Drill-Down Insights** — Filter by date or country for deeper analysis
 * **PDF Export** — Professionally formatted downloadable reports
 
-> 🎥 *Add short GIFs or screenshots here once available.*
-
 ### Data Aggregation
 
 * Real-time news fetching from NewsDataHub API
@@ -352,7 +350,7 @@ You'll see a 10-second toast showing which environment variables are missing:
 **Q: My topic returns no articles.**
 
 * Broaden the query (remove quotes or use fewer words).
-* Extend the date range to 14–30 days.
+* Extend the date range to 30 days.
 * Confirm topic spelling.
 
 **Q: Why is sentiment accuracy not perfect?**
@@ -370,9 +368,41 @@ Yes — extend components in `frontend/src/components/charts/`.
 Modify the StyleSheet in `frontend/src/components/ExportReportPDF.tsx`.
 
 **Q: How do I deploy this?**
-This is a tutorial. For production:
 
-* Add auth & DB, replace cache with Redis, enable HTTPS, monitoring, and rate limits.
+This application is designed as a local development tool and tutorial. However, if you wish to deploy it:
+
+**VPS/Cloud Hosting (DigitalOcean, AWS, GCP, Azure):**
+```bash
+# On your server
+git clone https://github.com/newsdatahubapi/ai-market-intelligence-dashboard.git
+cd ai-market-intelligence-dashboard
+
+# Set environment variables
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+nano backend/.env  # Add your API keys
+
+# Run with Docker Compose
+docker compose up -d
+
+# Optional: Use nginx as reverse proxy for HTTPS
+```
+
+**Platform-Specific Deployment:**
+- **Railway.app / Render.com:** Connect GitHub repo, set environment variables, deploy
+- **Heroku:** Use Docker deployment with `heroku.yml`
+- **Fly.io:** Use `fly launch` with Dockerfile
+
+**Production Considerations:**
+- Add HTTPS/SSL (use Let's Encrypt or Cloudflare)
+- Set `NODE_ENV=production` in backend
+- Update `ALLOWED_ORIGINS` to include your production domain
+- Consider Redis for caching instead of in-memory cache
+- Set up monitoring/logging (PM2, Datadog, etc.)
+- Implement rate limiting for API protection
+- Add authentication if making publicly accessible
+
+**Important:** This is a demo/tutorial application. For production use, consider adding proper authentication, database storage, and security hardening.
 
 ---
 
@@ -394,14 +424,14 @@ This is a tutorial. For production:
 
 **Q: Where can I report bugs or ask questions?**
 
-* GitHub → [Issues](https://github.com/newsdatahubapi/ai-market-intelligence-dashboard/issues) or Discussions
+* GitHub → [Issues](https://github.com/newsdatahub/ai-market-intelligence-dashboard/issues) or Discussions
 * Email → [support@newsdatahub.com](mailto:support@newsdatahub.com)
 * [NewsDataHub Docs](https://docs.newsdatahub.com)
 * [OpenAI Docs](https://platform.openai.com/docs)
 
 **Q: Why only English?**
 This tutorial filters English articles to keep sentiment and NER consistent.
-NewsDataHub itself supports 80+ languages.
+NewsDataHub API itself supports 80+ languages.
 
 ---
 
