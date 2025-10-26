@@ -20,34 +20,34 @@ type TimeRange = '14d' | '30d';
 const exampleQueriesBasic = [
   '"artificial intelligence"',
   '"quantum computing"',
-  // '"electric vehicles"',
-  // '"semiconductor shortage"',
-  // '"cybersecurity breach"',
-  // '"space exploration"',
-  // '"robotics"',
-  // '"housing market"',
-  // '"interest rate hike"',
-  // '"gold mining"',
-  // '"coffee production"',
-  // '"supply chain"',
-  // '"immigration reform"',
-  // '"russia ukraine conflict"',
-  // '"trade war"',
-  // '"global food crisis"',
-  // '"oil price"'
+  '"electric vehicles"',
+  '"semiconductor shortage"',
+  '"cybersecurity breach"',
+  '"space exploration"',
+  '"robotics"',
+  '"housing market"',
+  '"interest rate hike"',
+  '"gold mining"',
+  '"coffee production"',
+  '"supply chain"',
+  '"immigration reform"',
+  '"russia ukraine conflict"',
+  '"trade war"',
+  '"global food crisis"',
+  '"oil price"'
 ];
 
 const exampleQueriesAdvanced: string[] = [
-  // '"electric vehicles" AND battery',
-  // '"renewable energy" OR solar',
-  // "crypto NOT bitcoin",
-  // "ai AND regulation",
-  // "inflation OR recession",
-  // "china AND trade",
-  // "technology AND jobs",
-  // '"oil prices" AND US',
-  // "climate OR environment",
-  // '"electric vehicles" AND charging'
+  '"electric vehicles" AND battery',
+  '"renewable energy" OR solar',
+  "crypto NOT bitcoin",
+  "ai AND regulation",
+  "inflation OR recession",
+  "china AND trade",
+  "technology AND jobs",
+  '"oil prices" AND US',
+  "climate OR environment",
+  '"electric vehicles" AND charging'
 ];
 
 const getRandomPlaceholder = (): string => {
