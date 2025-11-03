@@ -15,7 +15,7 @@ type Props = {
   loading?: boolean;
 };
 
-type TimeRange = '14d' | '30d';
+type TimeRange = '14d' | '21d';
 
 const exampleQueriesBasic = [
   '"artificial intelligence"',
@@ -62,7 +62,6 @@ const TopicInput: React.FC<Props> = ({ topic, setTopic, startDate, endDate, setS
   const [placeholder, setPlaceholder] = useState<string>('');
 
   useEffect(() => {
-    // Set initial placeholder on mount
     setPlaceholder(getRandomPlaceholder());
   }, []);
   const handleTimeRangeChange = (range: TimeRange) => {
@@ -76,11 +75,11 @@ const TopicInput: React.FC<Props> = ({ topic, setTopic, startDate, endDate, setS
         fourteenDaysAgo.setDate(now.getDate() - 14);
         start = formatDate(fourteenDaysAgo);
         break;
-      case '30d':
+      case '21d':
       default:
-        const thirtyDaysAgo = new Date(now);
-        thirtyDaysAgo.setDate(now.getDate() - 30);
-        start = formatDate(thirtyDaysAgo);
+        const twentyOneDaysAgo = new Date(now);
+        twentyOneDaysAgo.setDate(now.getDate() - 21);
+        start = formatDate(twentyOneDaysAgo);
         break;
     }
 
@@ -95,7 +94,7 @@ const TopicInput: React.FC<Props> = ({ topic, setTopic, startDate, endDate, setS
     const diffDays = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
 
     if (diffDays <= 14) return '14d';
-    return '30d';
+    return '21d';
   };
 
   const tooltipText = `Search Tips:
@@ -124,7 +123,7 @@ const TopicInput: React.FC<Props> = ({ topic, setTopic, startDate, endDate, setS
       </div>
       <select value={getCurrentRange()} onChange={(e) => handleTimeRangeChange(e.target.value as TimeRange)}>
         <option value="14d">Last 14 days</option>
-        <option value="30d">Last 30 days</option>
+        <option value="21d">Last 21 days</option>
       </select>
       <select value={language} onChange={(e) => setLanguage(e.target.value)}>
         <option value="en">English</option>

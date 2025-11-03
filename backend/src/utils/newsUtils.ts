@@ -5,6 +5,7 @@ import { cache } from '../services/cacheService';
 import { logger } from './logger';
 import { normalizeSearchQuery } from './helpers';
 import { isDemoMode, getDemoCacheKey } from '../services/demoDataService';
+import { ApiTier, sanitizeArticlesForTier } from './tierUtils';
 
 /**
  * Deduplicates articles based on title.
@@ -27,6 +28,14 @@ export function deduplicateArticles(articles: NewsArticle[]): NewsArticle[] {
 }
 
 /**
+ * Result from fetchAllTopicArticles that includes API tier information
+ */
+export interface FetchArticlesResult {
+  articles: NewsArticle[];
+  apiTier?: ApiTier;
+}
+
+/**
  * Fetches all articles for a topic across multiple pages using cursor pagination.
  * Automatically handles pagination to retrieve complete dataset.
  * Deduplicates articles by title to remove redundant entries.
@@ -42,6 +51,25 @@ export async function fetchAllTopicArticles(params: {
   language?: string;
   maxLoops?: number;
 }): Promise<NewsArticle[]> {
+  const result = await fetchAllTopicArticlesWithTier(params);
+  return result.articles;
+}
+
+/**
+ * Fetches all articles for a topic with API tier detection.
+ * Sanitizes articles for free tier by removing unavailable fields.
+ *
+ * @param params - Search parameters including topic, date range, and filters
+ * @returns Object containing articles and detected API tier
+ */
+export async function fetchAllTopicArticlesWithTier(params: {
+  topic: string;
+  startDate: string;
+  endDate: string;
+  country?: string;
+  language?: string;
+  maxLoops?: number;
+}): Promise<FetchArticlesResult> {
   const {
     topic,
     startDate,
@@ -58,9 +86,10 @@ export async function fetchAllTopicArticles(params: {
   let cursor: string | undefined = undefined;
   const allArticles: NewsArticle[] = [];
   let loopCount = 0;
+  let detectedTier: ApiTier | undefined;
 
   do {
-    const response = await newsService.getNews({
+    const response = await newsService.getNewsWithTier({
       q: normalizedTopic,
       start_date: startDate,
       end_date: endDate,
@@ -73,6 +102,11 @@ export async function fetchAllTopicArticles(params: {
         'title,source_title,source_link,article_link,description,topics,keywords,pub_date,creator,content,media_url,media_type,language,sentiment,source',
     });
 
+    // Capture tier from first response
+    if (loopCount === 0 && response.apiTier) {
+      detectedTier = response.apiTier;
+    }
+
     allArticles.push(...response.data);
     cursor = response.next_cursor ?? undefined;
     loopCount += 1;
@@ -81,7 +115,7 @@ export async function fetchAllTopicArticles(params: {
     if (loopCount > maxLoops) break;
   } while (cursor);
 
-  // Deduplicate articles by title before returning
+  // Deduplicate articles by title before sanitization
   const deduplicated = deduplicateArticles(allArticles);
 
   if (deduplicated.length < allArticles.length) {
@@ -92,7 +126,22 @@ export async function fetchAllTopicArticles(params: {
     });
   }
 
-  return deduplicated;
+  // Sanitize articles for free tier to remove unavailable fields
+  const sanitizedArticles = detectedTier
+    ? sanitizeArticlesForTier(deduplicated, detectedTier)
+    : deduplicated;
+
+  if (detectedTier === 'free') {
+    logger.info('Free tier detected - sanitized article fields', {
+      topic,
+      articleCount: sanitizedArticles.length,
+    });
+  }
+
+  return {
+    articles: sanitizedArticles,
+    apiTier: detectedTier,
+  };
 }
 
 /**

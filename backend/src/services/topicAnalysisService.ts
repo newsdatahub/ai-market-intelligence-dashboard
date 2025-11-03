@@ -1,9 +1,10 @@
 import { ProcessedTopicData } from '../types';
 import { cache } from './cacheService';
 import { calculateCacheTTL } from '../utils/cacheUtils';
-import { fetchAllTopicArticles } from '../utils/newsUtils';
+import { fetchAllTopicArticles, fetchAllTopicArticlesWithTier } from '../utils/newsUtils';
 import { extractTopEntities } from './entityExtractionService';
 import { normalizeSearchQuery } from '../utils/helpers';
+import { ApiTier } from '../utils/tierUtils';
 import {
   aggregateMentionsByDay,
   calculateAverageSentiment,
@@ -68,8 +69,8 @@ export async function analyzeTopicCoverage(params: {
     return cachedAnalysis;
   }
 
-  // Fetch all articles for the topic
-  const articles = await fetchAllTopicArticles({
+  // Fetch all articles for the topic with tier detection
+  const { articles, apiTier } = await fetchAllTopicArticlesWithTier({
     topic,
     startDate,
     endDate,
@@ -117,6 +118,7 @@ export async function analyzeTopicCoverage(params: {
     topSources,
     geographicDistribution,
     topArticles,
+    apiTier,
   };
 
   // Cache result with appropriate TTL (shorter for current data, longer for historical)

@@ -8,6 +8,10 @@ import CoverageTimeline from './charts/CoverageTimeline';
 import SentimentChart from './charts/SentimentChart';
 import SentimentDonutChart from './charts/SentimentDonutChart';
 import PoliticalLeaningChart from './charts/PoliticalLeaningChart';
+import BlurredSentimentChart from './charts/BlurredSentimentChart';
+import BlurredPoliticalChart from './charts/BlurredPoliticalChart';
+import BlurredGeographicMap from './BlurredGeographicMap';
+import BlurredTimeline from './BlurredTimeline';
 import TopEntitiesSection from './TopEntitiesSection';
 import TopKeywords from './TopKeywords';
 import GeographicMap from './GeographicMap';
@@ -16,6 +20,8 @@ import ExportReportPDF from './ExportReportPDF';
 import { useToast } from './Toast';
 import InfoTooltip from './InfoTooltip';
 import ProgressIndicator from './ProgressIndicator';
+import TierBanner from './TierBanner';
+import UpgradePrompt from './UpgradePrompt';
 import { Brain, PieChart, Newspaper, Building2, TrendingUp, Globe, BarChart3, MapPin } from 'lucide-react';
 import { getCountryName } from '../constants/countries';
 import { formatDate, deduplicateArticles } from '../utils/helpers';
@@ -59,6 +65,12 @@ const AnalysisDashboard: React.FC = () => {
   const [showReport, setShowReport] = useState(false); // Controls when to actually display the report
 
   const onAnalyze = async () => {
+    // Validate topic input
+    if (!topic.trim()) {
+      toast.error('Please enter a topic to analyze');
+      return;
+    }
+
     // Clear content immediately - this will trigger loading states in panels
     setData(null);
     setReport('');
@@ -100,17 +112,29 @@ const AnalysisDashboard: React.FC = () => {
       // Check if this is demo mode
       const isDemoMode = topic.trim().endsWith('-demo');
 
-      // Auto-generate insights after successful analysis
+      // Auto-generate insights after successful analysis with retry logic
       setGeneratingReport(true);
-      try {
-        const reportResp = await reportApi.generateReport({ topic, startDate, endDate, language, reportType: 'custom' });
-        // Store report but don't show it yet - wait for progress to reach 100%
-        setReportReady(reportResp.report);
-      } catch (reportErr) {
-        // Don't set error - analysis succeeded, just report generation failed
-      } finally {
-        setGeneratingReport(false);
+      let reportGenerated = false;
+      const maxRetries = 3;
+
+      for (let attempt = 1; attempt <= maxRetries && !reportGenerated; attempt++) {
+        try {
+          const reportResp = await reportApi.generateReport({ topic, startDate, endDate, language, reportType: 'custom' });
+          // Store report but don't show it yet - wait for progress to reach 100%
+          setReportReady(reportResp.report);
+          reportGenerated = true;
+        } catch (reportErr) {
+          if (attempt === maxRetries) {
+            // Final attempt failed - don't set error, analysis succeeded, just report generation failed
+            console.error('Report generation failed after', maxRetries, 'attempts:', reportErr);
+          } else {
+            // Wait before retrying (exponential backoff)
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+          }
+        }
       }
+
+      setGeneratingReport(false);
 
       // Auto-generate demo reports for timeline and geographic
       if (isDemoMode && resp.topic) {
@@ -137,7 +161,6 @@ const AnalysisDashboard: React.FC = () => {
       }
     } catch (e: any) {
       // Check if this is an unsupported demo topic error
-      console.log('=======>',)
       if (e?.statusCode === 400 && e?.data?.supportedDemos) {
         const supportedDemos = e.data.supportedDemos;
         const exampleCommand = supportedDemos.length > 0 ? `"${supportedDemos[0]}"-demo` : '';
@@ -218,7 +241,8 @@ const AnalysisDashboard: React.FC = () => {
           const res = await reportApi.analyzeContext({
             context: 'spike',
             topic,
-            articles: fetchedArticles.slice(0, MAX_ARTICLES_FOR_AI_ANALYSIS)
+            articles: fetchedArticles.slice(0, MAX_ARTICLES_FOR_AI_ANALYSIS),
+            apiTier: data?.apiTier
           });
           setTimelineReport(res.summary);
         } catch (aiErr) {
@@ -253,7 +277,8 @@ const AnalysisDashboard: React.FC = () => {
             context: 'geo',
             topic,
             country,
-            articles: fetchedArticles.slice(0, MAX_ARTICLES_FOR_AI_ANALYSIS)
+            articles: fetchedArticles.slice(0, MAX_ARTICLES_FOR_AI_ANALYSIS),
+            apiTier: data?.apiTier
           });
           setGeoReport(res.summary);
         } catch (aiErr) {
@@ -310,11 +335,25 @@ const AnalysisDashboard: React.FC = () => {
     }
   };
 
+  // Check if user is on free tier
+  const isFreeTeir = data?.apiTier === 'free';
+
   return (
     <div className={styles.container}>
       <div className={styles.controls}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-          <TopicInput topic={topic} setTopic={setTopic} startDate={startDate} endDate={endDate} setStartDate={setStartDate} setEndDate={setEndDate} language={language} setLanguage={setLanguage} onAnalyze={onAnalyze} loading={loading} />
+          <TopicInput
+            topic={topic}
+            setTopic={setTopic}
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            language={language}
+            setLanguage={setLanguage}
+            onAnalyze={onAnalyze}
+            loading={loading}
+          />
           <a
             href="https://newsdatahub.com"
             target="_blank"
@@ -337,6 +376,9 @@ const AnalysisDashboard: React.FC = () => {
           </a>
         </div>
       </div>
+
+      {/* Tier Banner */}
+      {data?.apiTier && <TierBanner tier={data.apiTier} />}
 
       {/* Main insights - Full Width */}
       <div className={`${styles.panel} ${styles.intelligencePanel}`}>
@@ -435,6 +477,8 @@ const AnalysisDashboard: React.FC = () => {
                 <PieChart size={48} style={{ color: 'var(--text-secondary)', opacity: 0.5 }} />
                 <p>Sentiment analysis will appear here after you analyze a topic</p>
               </div>
+            ) : isFreeTeir ? (
+              <BlurredSentimentChart />
             ) : (
               <SentimentDonutChart sentiment={data.sentimentAverage} />
             )}
@@ -456,6 +500,8 @@ const AnalysisDashboard: React.FC = () => {
                 <Newspaper size={48} style={{ color: 'var(--text-secondary)', opacity: 0.5 }} />
                 <p>Source distribution will appear here after you analyze a topic</p>
               </div>
+            ) : isFreeTeir ? (
+              <BlurredPoliticalChart />
             ) : (
               <PoliticalLeaningChart distribution={data.politicalLeaningDistribution} />
             )}
@@ -505,6 +551,8 @@ const AnalysisDashboard: React.FC = () => {
                 <TrendingUp size={48} style={{ color: 'var(--text-secondary)', opacity: 0.5 }} />
                 <p>Timeline chart will appear here after you analyze a topic</p>
               </div>
+            ) : isFreeTeir ? (
+              <BlurredTimeline />
             ) : (
               <CoverageTimeline
                 series={series}
@@ -612,6 +660,8 @@ const AnalysisDashboard: React.FC = () => {
                   <Globe size={48} style={{ color: 'var(--text-secondary)', opacity: 0.5 }} />
                   <p>Geographic map will appear here after you analyze a topic</p>
                 </div>
+              ) : isFreeTeir ? (
+                <BlurredGeographicMap />
               ) : (
                 <GeographicMap
                   topic={data.topic}

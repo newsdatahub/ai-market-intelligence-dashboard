@@ -68,6 +68,8 @@ export interface TopEntities {
   locations: string[];
 }
 
+export type ApiTier = 'free' | 'developer' | 'business' | 'enterprise';
+
 export interface ProcessedTopicData {
   topic: string;
   totalMentions: number;
@@ -80,4 +82,5 @@ export interface ProcessedTopicData {
   topSources: { source: string; count: number }[];
   geographicDistribution: { country: string; count: number }[];
   topArticles: ArticleSummary[];
+  apiTier?: ApiTier;
 }

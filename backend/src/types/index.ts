@@ -96,6 +96,7 @@ export interface ProcessedTopicData {
   topSources: { source: string; count: number }[];
   geographicDistribution: { country: string; count: number }[];
   topArticles: ArticleSummary[]; // up to 20
+  apiTier?: 'free' | 'developer' | 'business' | 'enterprise';
 }
 
 export interface AnalyzeTopicRequest {

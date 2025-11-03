@@ -3,9 +3,10 @@ import { NewsQueryParams, NewsService } from './types';
 import { NewsResponse, RelatedArticlesResponse } from '../types';
 import { NEWSDATAHUB_BASE_URL, NEWSDATAHUB_API_KEY, CACHE_TTL_HISTORICAL, CACHE_TTL_CURRENT_DAY, validateEnvironmentVariables } from '../config/env';
 import { buildQueryString } from '../utils/queryStringUtils';
-import { fetchJSON } from '../utils/httpUtils';
+import { fetchJSON, fetchJSONWithHeaders, FetchResponse } from '../utils/httpUtils';
 import { calculateCacheTTL } from '../utils/cacheUtils';
 import { logger } from '../utils/logger';
+import { detectApiTier, ApiTier } from '../utils/tierUtils';
 
 /**
  * Generates a cache key for news query parameters.
@@ -28,6 +29,13 @@ function generateNewsCacheKey(params: NewsQueryParams): string {
  */
 function generateRelatedArticlesCacheKey(articleId: string, perPage: number, fields?: string): string {
   return `related:${articleId}:${perPage}:${fields || ''}`;
+}
+
+/**
+ * Response from getNews that includes API tier information
+ */
+export interface NewsResponseWithTier extends NewsResponse {
+  apiTier?: ApiTier;
 }
 
 /**
@@ -72,6 +80,53 @@ export class NewsDataHubService implements NewsService {
     cache.set(cacheKey, newsResponse, cacheTTL);
 
     return newsResponse;
+  }
+
+  /**
+   * Fetches news articles with API tier detection.
+   * This method includes tier information in the response for proper handling of free tier limitations.
+   *
+   * @param params - Query parameters for news search
+   * @returns News response with articles, pagination info, and API tier
+   */
+  async getNewsWithTier(params: NewsQueryParams): Promise<NewsResponseWithTier> {
+    const missingVars = validateEnvironmentVariables();
+    if (missingVars.length > 0) {
+      throw new Error(
+        `Missing API configuration. Please set the following environment variables: ${missingVars.join(', ')}`
+      );
+    }
+
+    const cacheKey = generateNewsCacheKey(params);
+
+    // Check cache first
+    const cachedNews = cache.get<NewsResponseWithTier>(cacheKey);
+    if (cachedNews) {
+      return cachedNews;
+    }
+
+    // Build request URL
+    const queryString = buildQueryString(params as Record<string, unknown>);
+    const url = `${NEWSDATAHUB_BASE_URL}/v1/news${queryString}`;
+
+    // Fetch from API with headers
+    const { data: newsResponse, headers } = await fetchJSONWithHeaders<NewsResponse>(url, {
+      'X-API-Key': NEWSDATAHUB_API_KEY,
+    });
+
+    // Detect API tier
+    const apiTier = detectApiTier(headers, newsResponse.data);
+
+    const responseWithTier: NewsResponseWithTier = {
+      ...newsResponse,
+      apiTier,
+    };
+
+    // Cache with appropriate TTL (shorter for current day, longer for historical)
+    const cacheTTL = calculateCacheTTL(params.end_date);
+    cache.set(cacheKey, responseWithTier, cacheTTL);
+
+    return responseWithTier;
   }
 
   /**

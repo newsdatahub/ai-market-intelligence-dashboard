@@ -137,7 +137,7 @@ All demo responses are pre-cached JSON files and work without API access or netw
 
 * Real-time news fetching from NewsDataHub API
 * Complex keyword queries with boolean operators
-* Date-range filters (14, 30 days)
+* Date-range filters (14, 21 days)
 * Smart caching to conserve API calls
 
 ### Analysis & Visualization
@@ -350,7 +350,7 @@ You'll see a 10-second toast showing which environment variables are missing:
 **Q: My topic returns no articles.**
 
 * Broaden the query (remove quotes or use fewer words).
-* Extend the date range to 30 days.
+* Extend the date range to 21 days.
 * Confirm topic spelling.
 
 **Q: Why is sentiment accuracy not perfect?**

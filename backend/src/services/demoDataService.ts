@@ -15,28 +15,49 @@ export const DEMO_SUFFIX = '-demo';
 export const DEMO_CACHE_TTL = 86400 * 7; // 7 days
 
 /**
+ * Normalizes topic by removing quotes (both smart and regular)
+ * @param topic - Topic string to normalize
+ * @returns Topic without surrounding quotes
+ *
+ * @example
+ * normalizeTopic('"artificial intelligence"') // 'artificial intelligence'
+ * normalizeTopic('"artificial intelligence"') // 'artificial intelligence'
+ * normalizeTopic('artificial intelligence') // 'artificial intelligence'
+ */
+function normalizeTopic(topic: string): string {
+  // Remove all types of quotes: regular ", ', and smart quotes " " ' '
+  return topic.trim().replace(/^["""''']+|["""''']+$/g, '');
+}
+
+/**
  * Checks if a topic string is in demo mode
  * @param topic - Topic string to check
  * @returns true if topic ends with -demo suffix
  *
  * @example
  * isDemoMode('artificial intelligence-demo') // true
+ * isDemoMode('"artificial intelligence"-demo') // true
  * isDemoMode('artificial intelligence') // false
  */
 export function isDemoMode(topic: string): boolean {
-  return topic.trim().endsWith(DEMO_SUFFIX);
+  const normalized = normalizeTopic(topic);
+  return normalized.endsWith(DEMO_SUFFIX);
 }
 
 /**
  * Extracts the base topic from a demo topic string
  * @param topic - Topic string with -demo suffix
- * @returns Base topic without the suffix
+ * @returns Base topic without the suffix or quotes
  *
  * @example
  * extractDemoTopic('artificial intelligence-demo') // 'artificial intelligence'
+ * extractDemoTopic('"artificial intelligence"-demo') // 'artificial intelligence'
  */
 export function extractDemoTopic(topic: string): string {
-  return topic.replace(DEMO_SUFFIX, '').trim();
+  // First remove the -demo suffix
+  const withoutSuffix = topic.trim().replace(DEMO_SUFFIX, '').trim();
+  // Then normalize to remove quotes
+  return normalizeTopic(withoutSuffix);
 }
 
 /**
@@ -61,7 +82,7 @@ export function getDemoTopicData(
 ): ProcessedTopicData | null {
   const baseTopic = extractDemoTopic(topic).toLowerCase();
 
-  if (baseTopic === 'artificial intelligence' || baseTopic === '"artificial intelligence"') {
+  if (baseTopic === 'artificial intelligence') {
     const data = topicAnalysisData.topic;
     console.log('Returning data for', baseTopic)
     // Return the data with the requested date range
@@ -83,7 +104,7 @@ export function getDemoTopicData(
 export function getDemoMainReport(topic: string): string | null {
   const baseTopic = extractDemoTopic(topic).toLowerCase();
 
-  if (baseTopic === 'artificial intelligence' || baseTopic === '"artificial intelligence"') {
+  if (baseTopic === 'artificial intelligence') {
     return contextAnalysisData.report;
   }
 
@@ -98,7 +119,7 @@ export function getDemoMainReport(topic: string): string | null {
 export function getDemoGeoReport(topic: string): string | null {
   const baseTopic = extractDemoTopic(topic).toLowerCase();
 
-  if (baseTopic === 'artificial intelligence' || baseTopic === '"artificial intelligence"') {
+  if (baseTopic === 'artificial intelligence') {
     return contextGeoData.summary;
   }
 
@@ -113,7 +134,7 @@ export function getDemoGeoReport(topic: string): string | null {
 export function getDemoTimelineReport(topic: string): string | null {
   const baseTopic = extractDemoTopic(topic).toLowerCase();
 
-  if (baseTopic === 'artificial intelligence' || baseTopic === '"artificial intelligence"') {
+  if (baseTopic === 'artificial intelligence') {
     return contextSpikeData.summary;
   }
 
@@ -128,7 +149,7 @@ export function getDemoTimelineReport(topic: string): string | null {
 export function getDemoSearchArticles(topic: string): NewsArticle[] {
   const baseTopic = extractDemoTopic(topic).toLowerCase();
 
-  if (baseTopic === 'artificial intelligence' || baseTopic === '"artificial intelligence"') {
+  if (baseTopic === 'artificial intelligence') {
     return (searchTopicData as any).data || [];
   }
 
@@ -143,7 +164,7 @@ export function getDemoSearchArticles(topic: string): NewsArticle[] {
 export function getDemoCountryArticles(topic: string): NewsArticle[] {
   const baseTopic = extractDemoTopic(topic).toLowerCase();
 
-  if (baseTopic === 'artificial intelligence' || baseTopic === '"artificial intelligence"') {
+  if (baseTopic === 'artificial intelligence') {
     return (countryCoverageData as any).data || [];
   }
 
