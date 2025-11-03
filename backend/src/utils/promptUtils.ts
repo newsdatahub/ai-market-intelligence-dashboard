@@ -24,6 +24,7 @@ interface ProcessedTopicData {
     description: string;
     articleUrl: string;
   }>;
+  apiTier?: 'free' | 'developer' | 'enterprise';
 }
 
 /**
@@ -57,13 +58,11 @@ export function generateIntelligenceReportPrompt(processedData: ProcessedTopicDa
     ? '\n\n**Note:** Coverage density is limited; insights may be preliminary.\n'
     : '';
 
-  return (
-    `Generate a comprehensive Report based on the following structured data:\n\n` +
-    `=== TOPIC METADATA ===\n` +
-    `Topic: ${processedData.topic}\n` +
-    `Time Period: ${processedData.dateRange.start} to ${processedData.dateRange.end}\n` +
-    `Total Articles: ${processedData.totalMentions}\n` +
-    `Peak Coverage Day: ${peakDay} (${peakCount} articles)\n\n` +
+  // Check if user is on free tier
+  const isFreeTier = processedData.apiTier === 'free';
+
+  // Build sentiment and political leaning sections only for paid tiers
+  const sentimentSection = !isFreeTier ? (
     `=== SENTIMENT SUMMARY ===\n` +
     `${JSON.stringify(sentimentSummary, null, 2)}\n\n` +
     `Instructions for sentiment interpretation:\n` +
@@ -74,7 +73,26 @@ export function generateIntelligenceReportPrompt(processedData: ProcessedTopicDa
     `${JSON.stringify(politicalLeaningDistribution, null, 2)}\n\n` +
     `Instructions for political leaning interpretation:\n` +
     `- If one group contributes >50%, comment on potential bias or coverage skew.\n` +
-    `- Otherwise, state that reporting appears ideologically diverse.\n\n` +
+    `- Otherwise, state that reporting appears ideologically diverse.\n\n`
+  ) : '';
+
+  const mediaToneBiasSection = !isFreeTier ? (
+    `## Media Tone & Bias\n` +
+    `Use the sentiment summary and political leaning distribution provided above.\n` +
+    `Follow the interpretation instructions for each metric.\n\n`
+  ) : (
+    `## Media Tone & Bias\n` +
+    `*Available on paid plans*\n\n`
+  );
+
+  return (
+    `Generate a comprehensive Report based on the following structured data:\n\n` +
+    `=== TOPIC METADATA ===\n` +
+    `Topic: ${processedData.topic}\n` +
+    `Time Period: ${processedData.dateRange.start} to ${processedData.dateRange.end}\n` +
+    `Total Articles: ${processedData.totalMentions}\n` +
+    `Peak Coverage Day: ${peakDay} (${peakCount} articles)\n\n` +
+    sentimentSection +
     `=== TOP ENTITIES MENTIONED ===\n` +
     `Organizations: ${topEntities.organizations.join(', ') || 'None'}\n` +
     `People: ${topEntities.people.join(', ') || 'None'}\n` +
@@ -93,9 +111,7 @@ export function generateIntelligenceReportPrompt(processedData: ProcessedTopicDa
     `## Key Developments\n` +
     `Summarize the main developments and trends based on the top stories.\n` +
     `Reference the top keywords (${topKeywords.join(', ')}) to contextualize the dominant themes.\n\n` +
-    `## Media Tone & Bias\n` +
-    `Use the sentiment summary and political leaning distribution provided above.\n` +
-    `Follow the interpretation instructions for each metric.\n\n` +
+    mediaToneBiasSection +
     `## Top Entities Mentioned\n` +
     `Integrate AI-extracted entity lists provided above.\n` +
     `Follow the interpretation instructions for entities.\n\n` +
@@ -155,6 +171,7 @@ export function generateContextExplanationPrompt(params: {
     country?: string;
     source_leaning?: string;
   }>;
+  apiTier?: 'free' | 'developer' | 'enterprise';
 }): string {
   const { context, topic, date, country, articles } = params;
 
@@ -204,13 +221,11 @@ export function generateContextExplanationPrompt(params: {
     ? '\n\n**Note:** Coverage density is limited; insights may be preliminary.\n'
     : '';
 
-  return (
-    `Generate a professional ${contextTitle} report based on the following structured data:\n\n` +
-    `=== CONTEXT METADATA ===\n` +
-    `Topic: ${topic}\n` +
-    `${date ? `Date: ${date}\n` : ''}` +
-    `${country ? `Country: ${country}\n` : ''}` +
-    `Total Articles: ${articles.length}\n\n` +
+  // Check if user is on free tier
+  const isFreeTier = params.apiTier === 'free';
+
+  // Build sentiment and political leaning sections only for paid tiers
+  const sentimentSection = !isFreeTier ? (
     `=== SENTIMENT SUMMARY ===\n` +
     `${JSON.stringify(sentimentSummary, null, 2)}\n\n` +
     `Instructions for sentiment interpretation:\n` +
@@ -221,7 +236,26 @@ export function generateContextExplanationPrompt(params: {
     `${JSON.stringify(politicalLeaningMap, null, 2)}\n\n` +
     `Instructions for political leaning interpretation:\n` +
     `- If one group contributes >50%, comment on potential bias or coverage skew.\n` +
-    `- Otherwise, state that reporting appears ideologically diverse.\n\n` +
+    `- Otherwise, state that reporting appears ideologically diverse.\n\n`
+  ) : '';
+
+  const mediaToneBiasSection = !isFreeTier ? (
+    `## Media Tone & Bias\n` +
+    `Use the sentiment summary and political leaning distribution provided above.\n` +
+    `Follow the interpretation instructions for each metric.\n\n`
+  ) : (
+    `## Media Tone & Bias\n` +
+    `*Available on paid plans*\n\n`
+  );
+
+  return (
+    `Generate a professional ${contextTitle} report based on the following structured data:\n\n` +
+    `=== CONTEXT METADATA ===\n` +
+    `Topic: ${topic}\n` +
+    `${date ? `Date: ${date}\n` : ''}` +
+    `${country ? `Country: ${country}\n` : ''}` +
+    `Total Articles: ${articles.length}\n\n` +
+    sentimentSection +
     `=== QUANTITATIVE CONTEXT ===\n` +
     `Top Sources: ${topSources.slice(0, 3).map((s: { source: string }) => s.source).join(', ')}\n` +
     `Top Keywords: ${topKeywordsList.join(', ')}\n` +
@@ -232,9 +266,7 @@ export function generateContextExplanationPrompt(params: {
     `## Key Developments\n` +
     `Summarize the main developments and trends based on the articles.\n` +
     `Reference the top keywords (${topKeywordsList.join(', ')}) to contextualize the dominant themes.\n\n` +
-    `## Media Tone & Bias\n` +
-    `Use the sentiment summary and political leaning distribution provided above.\n` +
-    `Follow the interpretation instructions for each metric.\n\n` +
+    mediaToneBiasSection +
     `## Geographic Highlights\n` +
     `Mention top countries and any notable regional patterns from the geographic distribution.\n` +
     `${country ? `Focus specifically on ${country}-related developments.\n` : ''}` +
@@ -272,6 +304,7 @@ export function createContextExplanationMessages(params: {
     article_link?: string;
     description?: string;
   }>;
+  apiTier?: 'free' | 'developer' | 'enterprise';
 }): ChatMessage[] {
   return [
     {

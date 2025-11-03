@@ -23,6 +23,7 @@ export interface ExplainContextRequestBody {
     pub_date?: string;
     article_link?: string;
   }>;
+  apiTier?: 'free' | 'developer' | 'enterprise';
 }
 
 export type GenerateReportRequest = Request<{}, {}, GenerateReportRequestBody>;

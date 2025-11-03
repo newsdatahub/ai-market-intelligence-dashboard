@@ -123,13 +123,14 @@ router.post('/report', async (req: GenerateReportRequest, res: GenerateReportRes
  */
 router.post('/context-analysis', async (req: ExplainContextRequest, res: ExplainContextResponse) => {
   try {
-    const { context, topic, date, country, articles } = req.body;
+    const { context, topic, date, country, articles, apiTier } = req.body;
     logger.info('[context-analysis] Received request', {
       context,
       topic,
       date,
       country,
       articlesCount: articles?.length,
+      apiTier,
     });
 
     if (!context || !topic || !Array.isArray(articles) || articles.length === 0) {
@@ -167,9 +168,16 @@ router.post('/context-analysis', async (req: ExplainContextRequest, res: Explain
       return res.json({ summary: cachedSummary, cached: true });
     }
 
+    // Detect API tier if not provided from frontend
+    let finalApiTier = apiTier;
+    if (!finalApiTier) {
+      const { detectApiTier: detectTier } = require('../utils/tierUtils');
+      finalApiTier = detectTier(new Headers(), articles);
+    }
+
     // Generate AI context analysis with aggregated metrics
-    logger.info('[context-analysis] Generating new AI report', { articlesCount: articles.length });
-    const messages = createContextExplanationMessages({ context, topic, date, country, articles });
+    logger.info('[context-analysis] Generating new AI report', { articlesCount: articles.length, apiTier: finalApiTier });
+    const messages = createContextExplanationMessages({ context, topic, date, country, articles, apiTier: finalApiTier });
     const summary = await generateAIReport(messages);
     logger.info('[context-analysis] AI report generated successfully', { summaryLength: summary?.length });
 

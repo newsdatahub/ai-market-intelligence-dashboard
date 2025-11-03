@@ -36,6 +36,7 @@ export interface AnalyzeTimelineSpikeRequest {
   topic: string;
   date?: string;
   articles: NewsArticle[];
+  apiTier?: 'free' | 'developer' | 'enterprise';
 }
 
 /**
@@ -46,6 +47,7 @@ export interface AnalyzeGeographicContextRequest {
   topic: string;
   country: string;
   articles: NewsArticle[];
+  apiTier?: 'free' | 'developer' | 'enterprise';
 }
 
 /**
@@ -55,6 +57,7 @@ export interface AnalyzeDeepDiveRequest {
   context: 'deep_dive';
   topic: string;
   articles: NewsArticle[];
+  apiTier?: 'free' | 'developer' | 'enterprise';
 }
 
 /**
