@@ -68,7 +68,7 @@ export interface TopEntities {
   locations: string[];
 }
 
-export type ApiTier = 'free' | 'developer' | 'enterprise';
+export type ApiTier = 'free' | 'developer' | 'business' | 'enterprise';
 
 export interface ProcessedTopicData {
   topic: string;

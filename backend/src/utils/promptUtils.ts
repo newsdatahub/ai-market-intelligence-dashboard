@@ -24,7 +24,7 @@ interface ProcessedTopicData {
     description: string;
     articleUrl: string;
   }>;
-  apiTier?: 'free' | 'developer' | 'enterprise';
+  apiTier?: 'free' | 'developer' | 'business' | 'enterprise';
 }
 
 /**
@@ -171,7 +171,7 @@ export function generateContextExplanationPrompt(params: {
     country?: string;
     source_leaning?: string;
   }>;
-  apiTier?: 'free' | 'developer' | 'enterprise';
+  apiTier?: 'free' | 'developer' | 'business' | 'enterprise';
 }): string {
   const { context, topic, date, country, articles } = params;
 
@@ -304,7 +304,7 @@ export function createContextExplanationMessages(params: {
     article_link?: string;
     description?: string;
   }>;
-  apiTier?: 'free' | 'developer' | 'enterprise';
+  apiTier?: 'free' | 'developer' | 'business' | 'enterprise';
 }): ChatMessage[] {
   return [
     {

@@ -3,7 +3,7 @@ import { NewsArticle } from '../types';
 /**
  * API tier types
  */
-export type ApiTier = 'free' | 'developer' | 'enterprise';
+export type ApiTier = 'free' | 'developer' | 'business' | 'enterprise';
 
 /**
  * Detects the API tier based on response headers.
