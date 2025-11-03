@@ -71,11 +71,18 @@ You can try the dashboard instantly — **no API keys required** — using the *
 
 4. Navigate to [http://localhost:5173](http://localhost:5173) in your browser.
 
-5. Enter the demo topic in the search bar:
+5. Enter the demo topic in the search bar (accepts both regular and smart quotes and also with no quotes):
    ```
    "artificial intelligence"-demo
    ```
-
+   or
+   ```
+   "artificial intelligence"-demo
+   ```
+   or
+   ```
+   artificial intelligence-demo
+   ```
 6. The app will instantly display:
    * Topic Analysis dashboard with charts and metrics
    * AI-Powered News Brief (main report)
@@ -123,6 +130,46 @@ All demo responses are pre-cached JSON files and work without API access or netw
 
 ---
 
+## Free Tier Experience
+
+When using a free NewsDataHub API key, the dashboard provides a limited experience to showcase the API's capabilities while encouraging upgrades for full access.
+
+### Restricted Features
+
+The following features are not available with a free API key, as the required data fields (sentiment scores, political leaning, source country metadata) are not included in free tier API responses. These features are **locked and displayed as blurred** with an "Upgrade to Unlock" overlay:
+
+* **Media Tone Distribution** — Sentiment analysis chart showing positive/neutral/negative coverage
+* **Source Ideological Distribution** — Political leaning analysis of news sources
+* **Geographic Coverage Map** — Interactive world map showing article distribution by country
+* **Coverage Over Time Timeline** — Daily article volume trends with clickable spike detection
+
+### Modified AI Reports
+
+AI-generated reports for free tier users exclude sentiment and bias analysis:
+* The **"Media Tone & Bias"** section shows: `*Available on paid plans*`
+* Reports still include: Key Developments, Geographic Highlights, Top Entities, and Strategic Insights
+
+### Article Limits
+
+* Free tier analysis is limited to **200 articles** (first 2 API pagination loops)
+* A warning appears if this limit is reached during analysis
+
+### Tier Notification Banner
+
+A yellow banner appears at the top of the dashboard for free tier users:
+
+> "You are on a free tier. Some features are limited. To see the full power of the application - try **"artificial intelligence"-demo**. [Upgrade to a paid plan] to access all features."
+
+### Upgrading
+
+To unlock all features:
+1. Visit [newsdatahub.com/plans](https://newsdatahub.com/plans)
+2. Upgrade to a Developer, Business, or Enterprise plan
+3. Replace your API key in `backend/.env`
+4. Restart the application
+
+---
+
 ## Features
 
 ### Interactive Dashboard
@@ -142,24 +189,26 @@ All demo responses are pre-cached JSON files and work without API access or netw
 
 ### Analysis & Visualization
 
-* **Sentiment Analysis** — Keyword-based scoring (positive/neutral/negative)
+> **Note:** Screenshots below show the paid tier experience. Free tier users see blurred versions of sentiment, timeline, and map charts with "Upgrade to Unlock" overlays. See [Free Tier Experience](#free-tier-experience) for details.
+
+* **Sentiment Analysis** — Keyword-based scoring (positive/neutral/negative) *(Paid plans only)*
 
 ![sentiment](assets/media-tone-distribution.png)
 
-* **Coverage Timeline** — Interactive daily trends with spike detection
+* **Coverage Timeline** — Interactive daily trends with spike detection *(Paid plans only)*
 
 ![coverage-timeline](assets/coverage-overtime-line-chart.png)
 
-* **Geographic Map** — Article counts by source country
+* **Geographic Map** — Article counts by source country *(Paid plans only)*
 
 ![geographic-map](assets/geographic-coverage-map.png)
 
 
-* **Keyword Extraction** — Frequently mentioned terms
+* **Keyword Extraction** — Frequently mentioned terms *(All tiers)*
 
 ![top-keywords](assets/top-keywords.png)
 
-* **Entity Recognition** — OpenAI-powered extraction of people, organizations, locations
+* **Entity Recognition** — OpenAI-powered extraction of people, organizations, locations *(All tiers)*
 
 ![top-entities](assets/top-entities-mentioned.png)
 
@@ -327,8 +376,8 @@ Both:
 * `NEWSDATAHUB_API_KEY` – fetches news articles and metadata.
 * `OPENAI_API_KEY` – generates summaries and insights.
 
-**Q: What's the free tier for NewsDataHub?**
-≈ 100 calls/day. Visit [newsdatahub.com](https://newsdatahub.com) for the latest quotas and pricing.
+**Q: What's the free tier quota for NewsDataHub?**
+≈ 100 API calls/day. Visit [newsdatahub.com/plans](https://newsdatahub.com/plans) for the latest quotas and pricing.
 
 **Q: How much does OpenAI cost?**
 Each report typically costs ~ $0.05 – $0.15 using `gpt-4o-mini`.
